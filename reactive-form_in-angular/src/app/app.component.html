@@ -1,0 +1,52 @@
+<h1>Angular 18 Reactive Forms Validation Example</h1>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input formControlName="name" id="name" type="text" class="form-control">
+
+    <!-- 
+            How It Works in HTML:
+f['name'] is equivalent to form.controls['name'] (since f() returns form.controls).
+
+f['name'].touched checks if the user has interacted with the input field.
+
+f['name'].invalid checks if the field has validation errors.
+
+f['name'].errors retrieves all validation errors for the field.
+
+Example:
+
+If the field is empty, f['name'].errors['required'] will be true, and the message "Name is required." will be displayed.
+
+If the name is less than 3 characters, f['name'].errors['minlength'] will be true, showing "Name should be 3 character.".
+            -->
+    <div *ngIf="f['name'].touched && f['name'].invalid" class="alert alert-danger">
+      <div *ngIf="f['name'].errors && f['name'].errors['required']">Name is required.</div>
+      <div *ngIf="f['name'].errors && f['name'].errors['minlength']">Name should be 3 character.</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input formControlName="email" id="email" type="text" class="form-control">
+    <!-- Here f function in component will check  -->
+    <div *ngIf="f['email'].touched && f['email'].invalid" class="alert alert-danger">
+      <div *ngIf="f['email'].errors && f['email'].errors['required']">Email is required.</div>
+      <div *ngIf="f['email'].errors && f['email'].errors['email']">Please, enter valid email address.</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="body">Body</label>
+    <textarea formControlName="body" id="body" type="text" class="form-control">
+        </textarea>
+    <div *ngIf="f['body'].touched && f['body'].invalid" class="alert alert-danger">
+      <div *ngIf="f['body'].errors && f['body'].errors['required']">Body is required.</div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" [disabled]="form.invalid" type="submit">Submit</button>
+</form>
+<router-outlet></router-outlet>
